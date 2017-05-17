@@ -1,0 +1,102 @@
+<!doctype html>
+<head>
+<title>Test of interactivity</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/pym-loader.js"></script>
+  <script type="text/javascript" src="js/pym.js"></script>
+
+<style>
+
+.tooltip {
+    display:none;
+    position:absolute;
+    border:1px solid #333;
+    background-color:#161616;
+    border-radius:5px;
+    padding:10px;
+    color:#fff;
+    font-size:16px;
+    font-family:Helvetica;
+}
+
+.enlarged{
+ transform:scale(2.0);
+ position:absolute;
+ top:0;
+ left:0;
+ margin:50px;
+/* background-color:#d3d3d3;
+*/}
+
+.full-size {
+  margin-left: 10px;
+  font-family: Helvetica;
+  font-size: 18px;
+}
+
+#image-label {
+  padding-bottom: 15px;
+}
+
+</style>
+</head>
+<body>
+  <div id='zoomed'></div>
+  <div class='full-size'>  
+    <p>Click <a target='_blank' href='https://s3.amazonaws.com/nj-data/Magnet-schools-graphic/Test_of_interactivity_page.html'>here</a> to view full size graphic.</p>
+</div>
+    <div class='tooltip'>
+      <div class='popuptext'></div>
+    </div>
+  <div class='enlarged'><svg version="1.1"xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   viewBox="0 0 500 600" style="enable-background:new 0 0 500 600;" xml:space="preserve"></svg></div>
+
+  <div id='image-label'></div>
+<script>
+var pymChild = null;
+pymChild = new pym.Child();
+// "Monmouth_x5f_communications_x5f_high_x5f_school_x5f_org"
+// "Monmouth_x5f_communications_x5f_high_x5f_school_x5f_org_x5f_zoom"
+
+
+$.get('Layered_pie_charts_9-01.svg', function(data) {
+  $("#image-label").append(data.documentElement);
+  pymChild.sendHeight();
+  init();
+});
+function init() {
+  $('.org-layer').on('click', function(){
+    var id = this.id
+    console.log(id)
+    $('#' + id + '_x5F_zoom').show();
+    $('.st134').click(function(){
+      $('#' + id + '_x5F_zoom').hide();
+    });
+  });
+
+    // $(this).setAttribute("transform", "scale(2)");
+    // $(".enlarged").resizable({aspectRatio:1.0});
+    // $(".enlarged").toggle()
+    // console.log("this");
+  $('path').hover(function(){
+    var title = $(this)[0].innerHTML;
+        // $(this).data('tipText', title).removeAttr('title');
+        $('<p class="tooltip"></p>')
+        .append(title)
+        .appendTo('body')
+        .fadeIn('slow');
+  }, function() {
+      // Hover out code
+      $(this).attr('title', $(this).data('tipText'));
+      $('.tooltip').remove();
+  }).mousemove(function(e) {
+      var mousex = e.pageX + 20; //Get X coordinates
+      var mousey = e.pageY + 10; //Get Y coordinates
+      $('.tooltip')
+      .css({ top: mousey, left: mousex })
+  });
+}
+
+
+</script>
+</body>
