@@ -61,3 +61,4 @@ You don't necessarily have to do this. In fact, if there's just one or two eleme
 The ID of the element is the name you gave that layer in Illustrator. [This tutorial](http://tomgermeau.com/2014/02/how-designers-can-create-interactive-prototypes-with-illustrator/) has another example of how you can do this.
 
 ## Option two: Grabbing it by element type
+Let's say you notice 
