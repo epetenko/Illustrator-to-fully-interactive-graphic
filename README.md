@@ -100,7 +100,8 @@ Let's break this down further. `$('path').hover(function()` means "when the user
 `var title = $(this)[0].innerHTML;` is a little more complicated. In this situation, I'm treating the SVG like a JSON, when the information I want is registered inside an array. the `innerHTML` takes the information pulled from that array and treats it like it's HTML that we can display, which is what's happening in the next line of code. 
 
 The next couple lines are pretty boilerplate mouseover usage. I styled it with CSS.
-```.tooltip {
+```
+.tooltip {
     display:none;
     position:absolute;
     border:1px solid #333;
