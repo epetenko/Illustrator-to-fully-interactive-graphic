@@ -68,4 +68,48 @@ What's happening is that when the user clicks on the element of a certain class,
 However, you're probably wondering: Where did `org-layer` come from? Well, I cheated. Illustrator didn't give the elements I wanted a class, so I added it myself. After Illustrator created the svg, I used Find-and-Replace to turn a layer -- like `<g id="Bergen_x5F_bergen_x5F_county_x5F_academies_x5F_org"> ` into `<g id="Bergen_x5F_bergen_x5F_county_x5F_academies_x5F_org" class="org-layer">`. 
 
 ## Option two: Grabbing it by element type
-Let's say you notice 
+SVG and HTML are quite different, but they do have some overlap. For example, you can name them with IDs and classes, and manipulate them with CSS. This makes it a little easier when you need to, say, treat an SVG as if it's an HTML document.
+
+In this case, I had non-showing text elements labeling sections of the pie chart with  `<path>` elements, like this:
+```<path class="st6" d="M174.1,1615.7c-27.4,19.9-65.7,13.8-85.6-13.5c-4.5-6.2-7.9-13.3-9.8-20.7l37.8-9.7
+				c3.1,11.9,15.2,19.1,27.1,16c2.7-0.7,5.3-1.9,7.6-3.5L174.1,1615.7z			">
+<p>White: 31%</p>
+			</path>
+```
+I needed to access them and show them when the user hovered over a section. So I put this within that `init()` function:
+```
+  $('path').hover(function(){
+    var title = $(this)[0].innerHTML;
+        $('<p class="tooltip"></p>')
+        .append(title)
+        .appendTo('body')
+        .fadeIn('slow');
+  }, function() {
+      // Hover out code
+      $(this).attr('title', $(this).data('tipText'));
+      $('.tooltip').remove();
+  }).mousemove(function(e) {
+      var mousex = e.pageX + 20; //Get X coordinates
+      var mousey = e.pageY + 10; //Get Y coordinates
+      $('.tooltip')
+      .css({ top: mousey, left: mousex })
+  });
+```
+Let's break this down further. `$('path').hover(function()` means "when the user hovers on a SVG path in the document, run this code." Again, in this case, JQuery is fine treating SVGs just like an HTML document.
+
+`var title = $(this)[0].innerHTML;` is a little more complicated. In this situation, I'm treating the SVG like a JSON, when the information I want is registered inside an array. the `innerHTML` takes the information pulled from that array and treats it like it's HTML that we can display, which is what's happening in the next line of code. 
+
+The next couple lines are pretty boilerplate mouseover usage. I styled it with CSS.
+```.tooltip {
+    display:none;
+    position:absolute;
+    border:1px solid #333;
+    background-color:#161616;
+    border-radius:5px;
+    padding:10px;
+    color:#fff;
+    font-size:16px;
+    font-family:Helvetica;
+}
+```
+
