@@ -71,10 +71,10 @@ However, you're probably wondering: Where did `org-layer` come from? Well, I che
 SVG and HTML are quite different, but they do have some overlap. For example, you can name them with IDs and classes, and manipulate them with CSS. This makes it a little easier when you need to, say, treat an SVG as if it's an HTML document.
 
 In this case, I had non-showing text elements labeling sections of the pie chart with  `<path>` elements, like this:
-```<path class="st6" d="M174.1,1615.7c-27.4,19.9-65.7,13.8-85.6-13.5c-4.5-6.2-7.9-13.3-9.8-20.7l37.8-9.7
-				c3.1,11.9,15.2,19.1,27.1,16c2.7-0.7,5.3-1.9,7.6-3.5L174.1,1615.7z			">
-<p>White: 31%</p>
-			</path>
+```
+<path class="st6" d="M174.1,1615.7c-27.4,19.9-65.7,13.8-85.6-13.5c-4.5-6.2-7.9-13.3-9.8-20.7l37.8-9.7 c3.1,11.9,15.2,19.1,27.1,16c2.7-0.7,5.3-1.9,7.6-3.5L174.1,1615.7z">
+	<p>White: 31%</p>
+</path>
 ```
 I needed to access them and show them when the user hovered over a section. So I put this within that `init()` function:
 ```
