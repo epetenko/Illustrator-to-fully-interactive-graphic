@@ -36,9 +36,23 @@ Now, on to the interactivity.
 
 
 ## Option one: hidden layers 
-Did you add in those hidden layers to your Illustrator file? Great. Now here's what it did: it added a class to each of those hidden documents -- `st132` -- and in the CSS, added some style to it: `.st132{display:none;}`. If you've worked with CSS and JQuery before, you might be familiar with this next step.
+Did you add in those hidden layers to your Illustrator file? Great. Now here's what it did: it added a class to each of those hidden documents -- in my case, `st132` -- and in the CSS, added some style to it: `.st132{display:none;}`. If you've worked with CSS and JQuery before, you might be familiar with this next step.
 
-I wanted to have the hidden layers show up when the user clicks on a certain section of the document. There are many ways to do this, but here's the one I used:
+The ID of the layer is just what you named it in Illustrator. To reveal a single layer, you can do this:
+```
+  $('#click-on-this').on('click', function(){
+    $('#hidden-layer').show();
+```
+This JQuery-based code registers when you click on element with a certain ID, finds the #hidden-layer element, and shows it.
+
+You can do the same thing with a class name, if you have multiple elements that you want to trigger the click:
+```
+  $('.click-class').on('click', function(){
+    $('#hidden-layer').show();
+```
+[This tutorial](http://tomgermeau.com/2014/02/how-designers-can-create-interactive-prototypes-with-illustrator/) has another example of how you can do this.
+
+I wanted something more elaborate: for the graphic to reveal a different hidden element, depending on what the user clicked on. There are many ways to do this, but here's the one I used:
 ```
 function init() {
   $('.org-layer').on('click', function(){
@@ -49,16 +63,9 @@ function init() {
     });
   });
   ```
-What's happening is that when the user clicks on the element of a certain class, the code finds the id of that element, and then finds the related element and shows it. Then when the user clicks on the "close" button -- helpfully called `st143` by Illustrator -- it runs a function that closes the layer.
+What's happening is that when the user clicks on the element of a certain class, the code finds the id of that element, and then finds the related element and shows it. Then when the user clicks on the "close" button -- helpfully called `st134` by Illustrator -- it runs a function that closes the layer.
 
 However, you're probably wondering: Where did `org-layer` come from? Well, I cheated. Illustrator didn't give the elements I wanted a class, so I added it myself. After Illustrator created the svg, I used Find-and-Replace to turn a layer -- like `<g id="Bergen_x5F_bergen_x5F_county_x5F_academies_x5F_org"> ` into `<g id="Bergen_x5F_bergen_x5F_county_x5F_academies_x5F_org" class="org-layer">`. 
-
-You don't necessarily have to do this. In fact, if there's just one or two elements that you need interactivity for, you can just reference them by ID:
-```
-  $('#click-on-this').on('click', function(){
-    $('#hidden-layer').show();
-```
-The ID of the element is the name you gave that layer in Illustrator. [This tutorial](http://tomgermeau.com/2014/02/how-designers-can-create-interactive-prototypes-with-illustrator/) has another example of how you can do this.
 
 ## Option two: Grabbing it by element type
 Let's say you notice 
